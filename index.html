@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Map with KML</title>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+   <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.min.css" />
+   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+   <script src="https://unpkg.com/leaflet-omnivore"></script>
+   <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.min.js"></script>
+   <style>
+       #map { height: 100vh; }
+   </style>
+</head>
+<body>
+   <div id="map"></div>
+   <script>
+       var map = L.map('map').setView([0, 0], 2);
+       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           maxZoom: 18,
+       }).addTo(map);
+
+       var kmlLayer = omnivore.kml Bulbulla.Kml.addTo(map);
+
+       var searchControl = new L.Control.Search({
+           layer: kmlLayer,
+           propertyName: 'name', // Adjust this to match the property in your KML file
+           moveToLocation: function(latlng, title, map) {
+               map.setView(latlng, 10);
+           }
+       });
+
+       map.addControl(searchControl);
+   </script>
+</body>
+</html>
